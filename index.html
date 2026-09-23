@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vishwesh Raghuvanshi | Bespoke Music</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0d0d0d;
+      --bg-light: #f7f6f2;
+      --text-gold: #c5a059;
+      --text-white: #ffffff;
+      --text-muted: #8e8e93;
+      --transition-lux: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Fixed Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    .brand-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .nav-actions a {
+      color: #fff;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .nav-actions a:hover {
+      opacity: 0.6;
+    }
+
+    /* Full-Screen Scroll Snapping Container */
+    .snap-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+    }
+    .snap-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Viewport Sections */
+    .snap-section {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .media-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .media-layer video,
+    .media-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.65);
+      transition: transform 1.2s var(--transition-lux);
+    }
+
+    .snap-section:hover .media-layer video,
+    .snap-section:hover .media-layer img {
+      transform: scale(1.02);
+    }
+
+    .content-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 750px;
+      padding: 2rem;
+    }
+
+    .tagline-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--text-gold);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .song-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+
+    .song-desc {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #dfdfdf;
+      margin-bottom: 2.5rem;
+    }
+
+    .lux-btn {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.4s var(--transition-lux);
+    }
+
+    .lux-btn:hover {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Scroll 4: Dual Pathways */
+    .pathways-section {
+      background: #080808;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      z-index: 2;
+    }
+
+    .pathway-card {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5rem;
+      cursor: pointer;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      transition: all 0.6s var(--transition-lux);
+    }
+
+    .pathway-card:last-child {
+      border-right: none;
+    }
+
+    .pathway-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(80%) brightness(0.35);
+      transition: all 0.8s var(--transition-lux);
+      z-index: 0;
+    }
+
+    .pathway-card:hover .pathway-bg {
+      filter: grayscale(0%) brightness(0.55);
+      transform: scale(1.04);
+    }
+
+    .pathway-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pathway-content h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pathway-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 420px;
+    }
+
+    /* Modals / Overlays (Song Details & Booking & Heritage) */
+    .view-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      z-index: 200;
+      display: none;
+      opacity: 0;
+      overflow-y: auto;
+      transition: opacity 0.5s ease;
+    }
+
+    .view-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .close-btn {
+      position: fixed;
+      top: 2.5rem;
+      right: 3rem;
+      z-index: 300;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* Heritage Lateral Scroll Diary */
+    .heritage-viewport {
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      display: flex;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      background: var(--bg-light);
+      color: #1a1a1a;
+    }
+    .heritage-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .heritage-panel {
+      min-width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem;
+      position: relative;
+    }
+
+    .diary-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      max-width: 1200px;
+      align-items: center;
+    }
+
+    .diary-image-box {
+      width: 100%;
+      height: 65vh;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .diary-text h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .diary-text p {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #444;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+    }
+
+    /* Dedicated Song Player Modal */
+    .song-modal-content {
+      max-width: 1000px;
+      margin: 8rem auto 4rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .song-player-container {
+      width: 100%;
+      height: 55vh;
+      background: #111;
+      margin-bottom: 3rem;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Booking Multi-Step Form */
+    .booking-container {
+      max-width: 650px;
+      margin: 8rem auto 4rem auto;
+      padding: 2rem;
+    }
+
+    .booking-step {
+      display: none;
+    }
+
+    .booking-step.active {
+      display: block;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-counter {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--text-gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      margin-bottom: 2rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 1rem 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus,
+    .input-group select:focus {
+      border-bottom-color: var(--text-gold);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .date-slot {
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .date-slot:hover,
+    .date-slot.selected {
+      background: var(--text-gold);
+      color: #000;
+      border-color: var(--text-gold);
+    }
+
+    @media (max-width: 768px) {
+      .pathways-section { grid-template-columns: 1fr; }
+      .pathway-card { height: 50vh; padding: 2rem; }
+      .diary-spread { grid-template-columns: 1fr; gap: 2rem; }
+      .diary-image-box { height: 35vh; }
+      .heritage-panel { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header>
+    <div class="brand-logo" onclick="scrollToTop()">Vishwesh Raghuvanshi</div>
+    <div class="nav-actions">
+      <a href="javascript:void(0)" onclick="openHeritage()">The Heritage</a>
+      <a href="javascript:void(0)" onclick="openBooking()">Bespoke Commission</a>
+    </div>
+  </header>
+
+  <!-- Full-Screen Scroll Experience -->
+  <main class="snap-container" id="mainContainer">
+    
+    <!-- First Scroll: Song 1 -->
+    <section class="snap-section" id="song1">
+      <div class="media-layer">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1920">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-playing-the-piano-41315-large.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="content-overlay">
+        <div class="tagline-sub">Opus I • Original Composition</div>
+        <h1 class="song-title">Aethelgard</h1>
+        <p class="song-desc">Written for a daughter’s twenty-first milestone, woven from childhood lullabies and timeless piano motifs.</p>
+        <button class="lux-btn" onclick="openSongDetail('Aethelgard', 'Opus I', 'A cinematic, piano-led reverie commissioned to capture a father\'s memories across two decades.', 'https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-playing-the-piano-41315-large.mp4')">Explore Piece</button>
+      </div>
+    </section>
+
+    <!-- Second Scroll: Song 2 -->
+    <section class="snap-section" id="song2">
+      <div class="media-layer">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1920">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-violinist-playing-40177-large.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="content-overlay">
+        <div class="tagline-sub">Opus II • Original Composition</div>
+        <h2 class="song-title">Soliloquy in Gold</h2>
+        <p class="song-desc">A lush orchestral score detailing a couple's journey across continents and decades together.</p>
+        <button class="lux-btn" onclick="openSongDetail('Soliloquy in Gold', 'Opus II', 'An emotional orchestral arrangement combining warm strings and minimal cello passages.', 'https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-violinist-playing-40177-large.mp4')">Explore Piece</button>
+      </div>
+    </section>
+
+    <!-- Third Scroll: Song 3 -->
+    <section class="snap-section" id="song3">
+      <div class="media-layer">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1920">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-lens-flare-reflected-on-a-guitar-surface-41484-large.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="content-overlay">
+        <div class="tagline-sub">Opus III • Original Composition</div>
+        <h2 class="song-title">The Glass Horizon</h2>
+        <p class="song-desc">An introspective neoclassical piece created to memorialize a founder’s life-defining triumph.</p>
+        <button class="lux-btn" onclick="openSongDetail('The Glass Horizon', 'Opus III', 'An atmospheric ambient-acoustic exploration built around warm analog synthesizers and acoustic harp.', 'https://assets.mixkit.co/videos/preview/mixkit-lens-flare-reflected-on-a-guitar-surface-41484-large.mp4')">Explore Piece</button>
+      </div>
+    </section>
+
+    <!-- Fourth Scroll: The Two Pathways -->
+    <section class="snap-section pathways-section" id="pathways">
+      <div class="pathway-card" onclick="openHeritage()">
+        <div class="pathway-bg" style="background-image: url('https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=1200');"></div>
+        <div class="pathway-content">
+          <div class="tagline-sub">Door I • Identity</div>
+          <h3>The Musician & The Craft</h3>
+          <p>Read through the journal: the philosophical roots, the pursuit of emotional clarity, and the bespoke approach.</p>
+          <span class="lux-btn">Enter The Heritage</span>
+        </div>
+      </div>
+
+      <div class="pathway-card" onclick="openBooking()">
+        <div class="pathway-bg" style="background-image: url('https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200');"></div>
+        <div class="pathway-content">
+          <div class="tagline-sub">Door II • Commission</div>
+          <h3>Book a Private Session</h3>
+          <p>Begin the dialogue. Share your narrative and reserve a private one-on-one session to shape your story into music.</p>
+          <span class="lux-btn">Initiate Booking</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- OVERLAY 1: Dedicated Song View -->
+  <div class="view-overlay" id="songOverlay">
+    <button class="close-btn" onclick="closeAllOverlays()">✕ Close</button>
+    <div class="song-modal-content">
+      <div class="tagline-sub" id="modalSongOpus">Opus Detail</div>
+      <h2 class="song-title" id="modalSongTitle">Title</h2>
+      <div class="song-player-container">
+        <video id="modalSongVideo" autoplay muted loop controls playsinline style="width:100%; height:100%; object-fit: cover;"></video>
+      </div>
+      <p class="song-desc" id="modalSongDesc" style="font-size:1.1rem; max-width:800px; margin: 0 auto 3.5rem auto;"></p>
+      
+      <div style="display:flex; justify-content:center; gap:2rem; margin-top:2rem;">
+        <button class="lux-btn" onclick="openHeritage()">Learn About Vishwesh</button>
+        <button class="lux-btn" onclick="openBooking()" style="background:#fff; color:#000;">Book a Session</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAY 2: About the Creator / Heritage Page (Lateral Parallax Diary) -->
+  <div class="view-overlay" id="heritageOverlay">
+    <button class="close-btn" onclick="closeAllOverlays()" style="color:#000;">✕ Return</button>
+    <div class="heritage-viewport" id="heritageViewport">
+      
+      <!-- Spread 1 -->
+      <div class="heritage-panel">
+        <div class="diary-spread">
+          <div class="diary-text">
+            <div class="tagline-sub" style="color:#777;">Chapter I</div>
+            <h2>The Weight of Memory</h2>
+            <p>Every significant life chapter deserves an enduring acoustic footprint. I treat each composition as an artifact—a mirror reflecting intimate details, untold devotions, and silent triumphs that words alone cannot articulate.</p>
+            <p>I do not write library tracks. Every melody is hand-sculpted from the ground up for a single recipient.</p>
+          </div>
+          <div class="diary-image-box" style="background-image: url('https://images.unsplash.com/photo-1520523839898-50712825e3a7?q=80&w=1000');"></div>
+        </div>
+      </div>
+
+      <!-- Spread 2 -->
+      <div class="heritage-panel">
+        <div class="diary-spread">
+          <div class="diary-image-box" style="background-image: url('https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1000');"></div>
+          <div class="diary-text">
+            <div class="tagline-sub" style="color:#777;">Chapter II</div>
+            <h2>The Custom Dialogue</h2>
+            <p>A commissioned song begins not with an instrument, but with your story. Through our private discovery sessions, we explore the tone, mood, and unspoken truths of your relationship, journey, or life work.</p>
+            <p>Only when the emotional landscape is mapped do I approach the piano and assemble the orchestral layers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spread 3: Transition to Commission -->
+      <div class="heritage-panel" style="background:#0d0d0d; color:#fff;">
+        <div class="diary-spread" style="text-align: center; display: block; max-width: 600px;">
+          <div class="tagline-sub">The Beginning</div>
+          <h2 style="color: #fff; margin-bottom: 1.5rem;">Begin Your Song</h2>
+          <p style="color: #999; margin-bottom: 3rem;">Commissioning a tailored musical piece is a deeply personal endeavor. Take the first step by providing your preliminary context.</p>
+          <button class="lux-btn" onclick="openBooking()" style="background:#fff; color:#000;">Enter Booking Process</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OVERLAY 3: 4-Step Booking Funnel -->
+  <div class="view-overlay" id="bookingOverlay">
+    <button class="close-btn" onclick="closeAllOverlays()">✕ Close</button>
+    <div class="booking-container">
+      
+      <!-- Step 1: Basic Details -->
+      <div class="booking-step active" id="step1">
+        <div class="step-counter">Step 01 / 04</div>
+        <h2 class="step-title">Personal Context</h2>
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="clientName" placeholder="e.g. Julian Montgomery" required />
+        </div>
+        <div class="input-group">
+          <label>Age & Occupation</label>
+          <input type="text" id="clientProfile" placeholder="e.g. 34, Architect" />
+        </div>
+        <div class="input-group">
+          <label>Who is this composition for?</label>
+          <input type="text" id="clientSubject" placeholder="e.g. For my spouse on our 10th anniversary" />
+        </div>
+        <button class="lux-btn" onclick="goToStep(2)">Proceed to Story Context</button>
+      </div>
+
+      <!-- Step 2: In-Depth Narrative Questionnaire -->
+      <div class="booking-step" id="step2">
+        <div class="step-counter">Step 02 / 04</div>
+        <h2 class="step-title">The Creative Narrative</h2>
+        <div class="input-group">
+          <label>What emotional truth must this melody capture?</label>
+          <textarea rows="3" id="clientEmotion" placeholder="Share the central feeling—longing, quiet triumph, gratitude..."></textarea>
+        </div>
+        <div class="input-group">
+          <label>A memorable sensory memory or milestone</label>
+          <textarea rows="3" id="clientMemory" placeholder="A specific evening, a glance, an unspoken moment..."></textarea>
+        </div>
+        <div style="display:flex; gap: 1rem;">
+          <button class="lux-btn" onclick="goToStep(1)">Back</button>
+          <button class="lux-btn" onclick="goToStep(3)" style="background:#fff; color:#000;">Select Session Time</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Calendar Session Selection -->
+      <div class="booking-step" id="step3">
+        <div class="step-counter">Step 03 / 04</div>
+        <h2 class="step-title">Choose Discussion Date</h2>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 2rem;">Select an available consultation window for our 1-on-1 private discussion.</p>
+        
+        <div class="calendar-grid">
+          <div class="date-slot" onclick="selectDate(this)">Thurs, Oct 08<br><strong>4:00 PM</strong></div>
+          <div class="date-slot" onclick="selectDate(this)">Fri, Oct 09<br><strong>6:30 PM</strong></div>
+          <div class="date-slot" onclick="selectDate(this)">Sat, Oct 10<br><strong>11:00 AM</strong></div>
+        </div>
+
+        <div style="display:flex; gap: 1rem;">
+          <button class="lux-btn" onclick="goToStep(2)">Back</button>
+          <button class="lux-btn" id="confirmDateBtn" onclick="goToStep(4)" style="background:#fff; color:#000;" disabled>Reserve Selected Slot</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Instant Confirmation -->
+      <div class="booking-step" id="step4">
+        <div class="step-counter">Step 04 / 04</div>
+        <h2 class="step-title">Consultation Reserved</h2>
+        <p style="color:#dedede; line-height: 1.8; margin-bottom: 2rem;">
+          Thank you, <span id="confirmedClientName" style="color:var(--text-gold);">Client</span>. Your private session has been logged in our studio calendar.
+        </p>
+        <div style="padding: 1.5rem; background: rgba(255,255,255,0.05); border-left: 2px solid var(--text-gold); margin-bottom: 2.5rem; font-size: 0.9rem; line-height: 1.7;">
+          <strong>Next Step:</strong> A direct invitation containing your Zoom & Google Meet room links, along with pre-session reflection notes, has been dispatched via WhatsApp & Email.
+        </div>
+        <button class="lux-btn" onclick="closeAllOverlays()">Return to Website</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToTop() {
+      document.getElementById('mainContainer').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Modal view handlers
+    function openSongDetail(title, opus, desc, videoSrc) {
+      document.getElementById('modalSongTitle').innerText = title;
+      document.getElementById('modalSongOpus').innerText = opus;
+      document.getElementById('modalSongDesc').innerText = desc;
+      const video = document.getElementById('modalSongVideo');
+      video.src = videoSrc;
+      video.play();
+      document.getElementById('songOverlay').classList.add('active');
+    }
+
+    function openHeritage() {
+      closeAllOverlays();
+      document.getElementById('heritageOverlay').classList.add('active');
+    }
+
+    function openBooking() {
+      closeAllOverlays();
+      document.getElementById('bookingOverlay').classList.add('active');
+    }
+
+    function closeAllOverlays() {
+      document.querySelectorAll('.view-overlay').forEach(overlay => {
+        overlay.classList.remove('active');
+      });
+      const modalVid = document.getElementById('modalSongVideo');
+      if (modalVid) modalVid.pause();
+    }
+
+    // Lateral scroll mousewheel control for diary page
+    const heritageViewport = document.getElementById('heritageViewport');
+    heritageViewport.addEventListener('wheel', (evt) => {
+      if (evt.deltaY !== 0) {
+        evt.preventDefault();
+        heritageViewport.scrollLeft += evt.deltaY * 1.5;
+      }
+    });
+
+    // Multi-Step Funnel Logic
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.booking-step').forEach(step => step.classList.remove('active'));
+      const targetStep = document.getElementById('step' + stepNumber);
+      if (targetStep) targetStep.classList.add('active');
+
+      if (stepNumber === 4) {
+        const nameInput = document.getElementById('clientName').value;
+        document.getElementById('confirmedClientName').innerText = nameInput || 'Friend';
+      }
+    }
+
+    function selectDate(el) {
+      document.querySelectorAll('.date-slot').forEach(slot => slot.classList.remove('selected'));
+      el.classList.add('selected');
+      const confirmBtn = document.getElementById('confirmDateBtn');
+      confirmBtn.removeAttribute('disabled');
+    }
+  </script>
+</body>
+</html>
